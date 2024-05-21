@@ -1,0 +1,17 @@
+{
+    "student1": {
+      "date": "2023-04-10",
+      "total": 5,
+      "attended": 3
+    },
+    "student2": {
+      "date": "2023-04-10",
+      "total": 4,
+      "attended": 4
+    },
+    "student3": {
+      "date": "2023-04-10",
+      "total": 2,
+      "attended": 1
+    }
+  }

@@ -1,0 +1,154 @@
+{
+    "AllQuestions": [
+        {
+            "id": 1,
+            "Question": "What is a linked list in data structures?",
+            "Options": [
+                "A data structure that stores a collection of elements with each element pointing to the next element in the sequence.",
+                "A data structure that follows the Last In First Out (LIFO) principle.",
+                "A sorting algorithm.",
+                "An array of fixed size."
+            ]
+        },
+        {
+            "id": 2,
+            "Question": "What is the time complexity of bubble sort in the worst case scenario?",
+            "Options": [
+                "O(n^2)",
+                "O(n)",
+                "O(log n)",
+                "O(1)"
+            ]
+        },
+        {
+            "id": 3,
+            "Question": "What is the purpose of a queue?",
+            "Options": [
+                "To store elements with efficient insertion (enqueue) and deletion (dequeue) operations, following the First In First Out (FIFO) principle.",
+                "To sort elements in an array.",
+                "To perform matrix multiplication.",
+                "To implement recursion."
+            ]
+        },
+        {
+            "id": 4,
+            "Question": "What is the difference between Dijkstra's algorithm and A* search algorithm?",
+            "Options": [
+                "Dijkstra's algorithm finds the shortest path from a starting node to all other nodes in the graph, while A* search algorithm is an informed search algorithm that uses heuristics to efficiently find the shortest path to a goal node.",
+                "A* search algorithm always finds the shortest path in the graph, while Dijkstra's algorithm may not guarantee the shortest path.",
+                "There is no difference between Dijkstra's algorithm and A* search algorithm.",
+                "Dijkstra's algorithm performs better than A* search algorithm."
+            ]
+        },
+        {
+            "id": 5,
+            "Question": "What is a binary tree?",
+            "Options": [
+                "A hierarchical data structure where each node has at most two children, referred to as the left child and the right child.",
+                "A data structure that follows the Last In First Out (LIFO) principle.",
+                "A sorting algorithm.",
+                "An array of fixed size."
+            ]
+        },
+        {
+            "id": 6,
+            "Question": "What is the time complexity of merge sort in the worst case scenario?",
+            "Options": [
+                "O(n log n)",
+                "O(n)",
+                "O(n^2)",
+                "O(1)"
+            ]
+        },
+        {
+            "id": 7,
+            "Question": "What is the purpose of a priority queue?",
+            "Options": [
+                "To store elements with associated priorities, where elements with higher priorities are dequeued before elements with lower priorities.",
+                "To sort elements in an array.",
+                "To perform matrix multiplication.",
+                "To implement recursion."
+            ]
+        },
+        {
+            "id": 8,
+            "Question": "What is the difference between a tree and a graph?",
+            "Options": [
+                "A tree is a special type of graph where there are no cycles, while a graph can have cycles.",
+                "A tree always has a root node, while a graph may not have a designated root node.",
+                "There is no difference between a tree and a graph.",
+                "A graph always has a root node, while a tree may not have a designated root node."
+            ]
+        },
+        {
+            "id": 9,
+            "Question": "What is a hash function?",
+            "Options": [
+                "A function that takes an input (or 'key') and returns a fixed-size string of bytes.",
+                "A data structure that follows the Last In First Out (LIFO) principle.",
+                "A sorting algorithm.",
+                "An array of fixed size."
+            ]
+        },
+        {
+            "id": 10,
+            "Question": "What is the time complexity of quicksort in the worst case scenario?",
+            "Options": [
+                "O(n^2)",
+                "O(n)",
+                "O(n log n)",
+                "O(1)"
+            ]
+        },
+        {
+            "id": 11,
+            "Question": "What is the purpose of a binary search tree?",
+            "Options": [
+                "To store elements in a tree structure where each node has at most two children, with the left child containing smaller values and the right child containing larger values.",
+                "To sort elements in an array.",
+                "To perform matrix multiplication.",
+                "To implement recursion."
+            ]
+        },
+        {
+            "id": 12,
+            "Question": "What is the difference between BFS and DFS in terms of memory usage?",
+            "Options": [
+                "BFS typically uses more memory than DFS because it needs to store all nodes at each level in a queue.",
+                "DFS typically uses more memory than BFS because it needs to store all nodes at each level in a stack.",
+                "There is no difference between BFS and DFS in terms of memory usage.",
+                "DFS always uses less memory than BFS."
+            ]
+        },
+        {
+            "id": 13,
+            "Question": "What is a heap data structure?",
+            "Options": [
+                "A specialized tree-based data structure that satisfies the heap property, where each parent node is less than or equal to its children (min-heap) or greater than or equal to its children (max-heap).",
+                "A data structure that follows the Last In First Out (LIFO) principle.",
+                "A sorting algorithm.",
+                "An array of fixed size."
+            ]
+        },
+        {
+            "id": 14,
+            "Question": "What is the time complexity of insertion sort in the worst case scenario?",
+            "Options": [
+                "O(n^2)",
+                "O(n)",
+                "O(n log n)",
+                "O(1)"
+            ]
+        },
+        {
+            "id": 15,
+            "Question": "What is the purpose of a trie?",
+            "Options": [
+                "To efficiently store and retrieve strings in a data structure optimized for prefix search operations.",
+                "To sort elements in an array.",
+                "To perform matrix multiplication.",
+                "To implement recursion."
+            ]
+        }
+    ]
+}
