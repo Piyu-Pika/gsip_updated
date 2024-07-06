@@ -1,43 +1,28 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Attendance Portal',
-      home: AttendancePage(),
-    );
-  }
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Student {
+  final String id;
   final String name;
   bool isPresent;
 
-  Student({required this.name, this.isPresent = false});
+  Student({required this.id, required this.name, this.isPresent = false});
 }
 
-class AttendancePage extends StatefulWidget {
+class TeachersAttendancePage extends StatefulWidget {
   @override
-  _AttendancePageState createState() => _AttendancePageState();
+  _TeachersAttendancePageState createState() => _TeachersAttendancePageState();
 }
 
-class _AttendancePageState extends State<AttendancePage> {
+class _TeachersAttendancePageState extends State<TeachersAttendancePage> {
   List<Student> students = [
-    Student(name: 'Piyush Bhardwaj'),
-    Student(name: 'Shrishti Rawat'),
-    Student(name: 'Manya Thapliyal'),
-    Student(name: 'Aadhya Sharma'),
-    Student(name: 'Kashish Gupta'),
-    Student(name: 'Prem '),
-    Student(name: 'Ali'),
-    Student(name: 'Taylor swift'),
-    Student(name: 'Thonos'),
-    Student(name: 'Iron Man'),
+    Student(id: '1', name: 'Piyush Bhardwaj'),
+    Student(id: '2', name: 'Shrishti Rawat'),
+    Student(id: '3', name: 'Manya Thapliyal'),
+    Student(id: '4', name: 'Aadhya Sharma'),
+    Student(id: '5', name: 'Kashish Gupta'),
+    // Add more students as needed
   ];
 
   void _markAllPresent() {
@@ -56,20 +41,39 @@ class _AttendancePageState extends State<AttendancePage> {
     });
   }
 
-  void _navigateToSummary() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SummaryPage(students: students),
-      ),
-    );
+  void _saveAttendance() async {
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    Map<String, dynamic> attendanceData = {};
+
+    for (var student in students) {
+      attendanceData[student.id] = {
+        'date': today,
+        'isPresent': student.isPresent,
+        'studentId': student.id,
+        'studentName': student.name,
+      };
+    }
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('attendance')
+          .doc(today)
+          .set(attendanceData);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Attendance saved successfully')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving attendance: $e')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Attendance Portal'),
+        title: const Text('Teacher\'s Attendance Portal'),
       ),
       body: Column(
         children: [
@@ -81,36 +85,31 @@ class _AttendancePageState extends State<AttendancePage> {
               },
             ),
           ),
-          BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.check_circle),
-                label: 'Mark All Present',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.cancel),
-                label: 'Mark All Absent',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.navigate_next),
-                label: 'Next',
-              ),
-            ],
-            onTap: (index) {
-              switch (index) {
-                case 0:
-                  _markAllPresent();
-                  break;
-                case 1:
-                  _markAllAbsent();
-                  break;
-                case 2:
-                  _navigateToSummary();
-                  break;
-              }
-            },
+          ElevatedButton(
+            onPressed: _saveAttendance,
+            child: const Text('Save Attendance'),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check_circle),
+            label: 'Mark All Present',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.cancel),
+            label: 'Mark All Absent',
           ),
         ],
+        onTap: (index) {
+          if (index == 0) {
+            _markAllPresent();
+          } else if (index == 1) {
+            _markAllAbsent();
+          }
+        },
       ),
     );
   }
@@ -129,7 +128,7 @@ class _StudentCardState extends State<StudentCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.student.isPresent ? Colors.green : Colors.red,
+      color: widget.student.isPresent ? Colors.green[100] : Colors.red[100],
       child: ListTile(
         title: Text(widget.student.name),
         trailing: Switch(
@@ -140,45 +139,6 @@ class _StudentCardState extends State<StudentCard> {
             });
           },
         ),
-      ),
-    );
-  }
-}
-
-class SummaryPage extends StatelessWidget {
-  final List<Student> students;
-
-  SummaryPage({required this.students});
-
-  @override
-  Widget build(BuildContext context) {
-    List<Student> presentStudents = students.where((student) => student.isPresent).toList();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Attendance Summary'),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Present Students:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: presentStudents.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(presentStudents[index].name),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

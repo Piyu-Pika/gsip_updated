@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gsip/screens/ideascreean.dart';
-import 'package:gsip/screens/notes_screen.dart';
-import 'package:gsip/screens/feedback.dart';
+import 'package:gsip_updated/screens/feedback.dart';
+import 'package:gsip_updated/screens/ideascreean.dart';
+import 'package:gsip_updated/screens/notes_screen.dart';
 
 class ParentsPortal extends StatefulWidget {
   const ParentsPortal({

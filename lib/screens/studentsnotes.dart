@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:gsip/screens/ai_tutor.dart';
+import 'package:gsip_updated/screens/ai_tutor.dart';
 
 class Resources extends StatefulWidget {
   const Resources({super.key});
@@ -68,12 +68,14 @@ class _ResourcesState extends State<Resources> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            Navigator.of(context).push(MaterialPageRoute(builder: ((context) => const AiTutor())));
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: ((context) => const AiTutor())));
           });
-  },child: const Icon(Icons.shape_line_rounded),),
+        },
+        child: const Icon(Icons.shape_line_rounded),
+      ),
     );
   }
-
 }
 
 class NotesPage extends StatelessWidget {

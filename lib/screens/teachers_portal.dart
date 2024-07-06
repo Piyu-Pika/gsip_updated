@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gsip/screens/feedback.dart';
-import 'package:gsip/screens/teachersattendance.dart';
-import 'package:gsip/screens/ideascreean.dart';
-import 'package:gsip/screens/teacheresnotes.dart';
+import 'package:gsip_updated/screens/feedback.dart';
+import 'package:gsip_updated/screens/ideascreean.dart';
+import 'package:gsip_updated/screens/parents_portal.dart';
+import 'package:gsip_updated/screens/teachersattendance.dart';
 
 class TeachereScreen extends StatefulWidget {
-  const TeachereScreen({super.key,});
+  const TeachereScreen({
+    super.key,
+  });
 
   @override
   State<TeachereScreen> createState() => _TeachereScreenState();
@@ -32,20 +34,22 @@ class _TeachereScreenState extends State<TeachereScreen> {
               ),
               Tab(
                 icon: Icon(Icons.build),
-                text: "Ideas",),
+                text: "Ideas",
+              ),
               Tab(
                 icon: Icon(Icons.tab),
                 text: "Attendance",
               ),
             ],
           ),
-        elevation: 0,),
+          elevation: 0,
+        ),
         body: TabBarView(
           children: <Widget>[
             const FeedbackPage(),
             const Resources(),
             const IdeaPage(),
-            AttendancePage()
+            TeachersAttendancePage()
           ],
         ),
       ),

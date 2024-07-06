@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916560193105",
+    "project_id": "alpha-d5035",
+    "storage_bucket": "alpha-d5035.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916560193105:android:b68889a26a88bc8fd9ba70",
+        "android_client_info": {
+          "package_name": "com.piyush.gsip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0BZGaSGFUV5p828aPL3ISEkqBRxfC6tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
