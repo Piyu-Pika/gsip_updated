@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gsip_updated/screens/ai_tutor.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:gsip_updated/screens/ai_tutor.dart';
 
 class Resources extends StatefulWidget {
   const Resources({super.key});
@@ -61,7 +61,7 @@ class _ResourcesState extends State<Resources> {
                 ),
               );
             },
-            child: Text(noteData[index]['Title']),
+            child: Text(noteData[index]['title']),
           );
         },
       ),
@@ -76,6 +76,9 @@ class _ResourcesState extends State<Resources> {
       ),
     );
   }
+
+  final _titleController = TextEditingController();
+  final _contentController = TextEditingController();
 }
 
 class NotesPage extends StatelessWidget {

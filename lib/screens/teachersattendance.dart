@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 class Student {
   final String id;
@@ -11,6 +14,8 @@ class Student {
 }
 
 class TeachersAttendancePage extends StatefulWidget {
+  const TeachersAttendancePage({super.key});
+
   @override
   _TeachersAttendancePageState createState() => _TeachersAttendancePageState();
 }
@@ -69,11 +74,43 @@ class _TeachersAttendancePageState extends State<TeachersAttendancePage> {
     }
   }
 
+  Future<void> _generatePdf() async {
+    final doc = pw.Document();
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    doc.addPage(pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Column(
+            children: [
+              pw.Text('Attendance Report - $today',
+                  style: pw.TextStyle(
+                      fontSize: 24, fontWeight: pw.FontWeight.bold)),
+              pw.SizedBox(height: 20),
+              pw.Table.fromTextArray(context: context, data: <List<String>>[
+                <String>['Student Name', 'Status'],
+                ...students.map((student) =>
+                    [student.name, student.isPresent ? 'Present' : 'Absent'])
+              ]),
+            ],
+          ); // Center
+        }));
+
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => doc.save());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Teacher\'s Attendance Portal'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.picture_as_pdf),
+            onPressed: _generatePdf,
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -85,11 +122,17 @@ class _TeachersAttendancePageState extends State<TeachersAttendancePage> {
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: _saveAttendance,
-            child: const Text('Save Attendance'),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: _saveAttendance,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+                textStyle: const TextStyle(fontSize: 18),
+              ),
+              child: const Text('Save Attendance'),
+            ),
           ),
-          const SizedBox(height: 10),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -118,7 +161,7 @@ class _TeachersAttendancePageState extends State<TeachersAttendancePage> {
 class StudentCard extends StatefulWidget {
   final Student student;
 
-  StudentCard({required this.student});
+  const StudentCard({super.key, required this.student});
 
   @override
   _StudentCardState createState() => _StudentCardState();
@@ -129,8 +172,13 @@ class _StudentCardState extends State<StudentCard> {
   Widget build(BuildContext context) {
     return Card(
       color: widget.student.isPresent ? Colors.green[100] : Colors.red[100],
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 2,
       child: ListTile(
-        title: Text(widget.student.name),
+        title: Text(
+          widget.student.name,
+          style: const TextStyle(fontSize: 16),
+        ),
         trailing: Switch(
           value: widget.student.isPresent,
           onChanged: (value) {

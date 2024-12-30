@@ -66,7 +66,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 1,
                         ),
                       ));
@@ -79,7 +79,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 2,
                         ),
                       ));
@@ -92,7 +92,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 3,
                         ),
                       ));
@@ -105,7 +105,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 4,
                         ),
                       ));
@@ -118,7 +118,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 5,
                         ),
                       ));
@@ -131,7 +131,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 6,
                         ),
                       ));
@@ -144,7 +144,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 7,
                         ),
                       ));
@@ -157,7 +157,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 8,
                         ),
                       ));
@@ -170,7 +170,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 9,
                         ),
                       ));
@@ -183,7 +183,7 @@ class _ResourcesState extends State<Resources> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotesPage(
+                        builder: (context) => const NotesPage(
                           id: 10,
                         ),
                       ));

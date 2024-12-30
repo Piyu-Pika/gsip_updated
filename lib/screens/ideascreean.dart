@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class IdeaPage extends StatefulWidget {
   const IdeaPage({super.key});
@@ -11,55 +9,32 @@ class IdeaPage extends StatefulWidget {
 }
 
 class _IdeaPageState extends State<IdeaPage> {
-  List<Map<String, dynamic>> idea = [];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _ideaController = TextEditingController();
   final TextEditingController _responseController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _loadIdeaData();
   }
 
-  Future<void> _loadIdeaData() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/idea.json');
-    if (await file.exists()) {
-      final jsonData = await file.readAsString();
-      final data = json.decode(jsonData) as Map<String, dynamic>;
-      setState(() {
-        idea = List<Map<String, dynamic>>.from(data['Idea']);
-      });
-    }
-  }
-
-  Future<void> _saveIdeaData() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/idea.json');
-    await file.writeAsString(json.encode({'Idea': idea}));
-    print('Idea data saved to ${file.path}');
-  }
-
-  void _postIdea() {
+  Future<void> _postIdea() async {
     if (_ideaController.text.isNotEmpty) {
-      setState(() {
-        idea.add({
-          'idea': _ideaController.text,
-          'responses': [],
-        });
-        _ideaController.clear();
+      await _firestore.collection('ideas').add({
+        'idea': _ideaController.text,
+        'responses': [],
+        'timestamp': FieldValue.serverTimestamp(),
       });
-      _saveIdeaData();
+      _ideaController.clear();
     }
   }
 
-  void _postResponse(int index) {
+  Future<void> _postResponse(String ideaId) async {
     if (_responseController.text.isNotEmpty) {
-      setState(() {
-        idea[index]['responses'].add(_responseController.text);
-        _responseController.clear();
+      await _firestore.collection('ideas').doc(ideaId).update({
+        'responses': FieldValue.arrayUnion([_responseController.text]),
       });
-      _saveIdeaData();
+      _responseController.clear();
     }
   }
 
@@ -84,47 +59,64 @@ class _IdeaPageState extends State<IdeaPage> {
             ),
             const SizedBox(height: 16.0),
             Expanded(
-              child: ListView.builder(
-                itemCount: idea.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            idea[index]['idea'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          ...List.generate(
-                            idea[index]['responses'].length,
-                            (responseIndex) => Text(
-                              idea[index]['responses'][responseIndex],
-                              style: const TextStyle(
-                                fontSize: 14.0,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _firestore
+                    .collection('ideas')
+                    .orderBy('timestamp', descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final ideas = snapshot.data!.docs;
+
+                  return ListView.builder(
+                    itemCount: ideas.length,
+                    itemBuilder: (context, index) {
+                      final idea = ideas[index].data() as Map<String, dynamic>;
+                      final ideaId = ideas[index].id;
+
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                idea['idea'],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          TextField(
-                            controller: _responseController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter your response',
-                              border: const OutlineInputBorder(),
-                              suffixIcon: IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () => _postResponse(index),
+                              const SizedBox(height: 8.0),
+                              ...List.generate(
+                                (idea['responses'] as List).length,
+                                (responseIndex) => Text(
+                                  idea['responses'][responseIndex],
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: 8.0),
+                              TextField(
+                                controller: _responseController,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter your response',
+                                  border: const OutlineInputBorder(),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.send),
+                                    onPressed: () => _postResponse(ideaId),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

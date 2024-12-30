@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class StudentAttendancePage extends StatelessWidget {
   final String studentId;
 
-  StudentAttendancePage({required this.studentId});
+  const StudentAttendancePage({super.key, required this.studentId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Attendance'),
+        title: const Text('My Attendance'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -23,7 +23,7 @@ class StudentAttendancePage extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           List<DocumentSnapshot> documents = snapshot.data!.docs;
@@ -40,7 +40,7 @@ class StudentAttendancePage extends StatelessWidget {
           }
 
           if (attendanceRecords.isEmpty) {
-            return Center(child: Text('No attendance records found.'));
+            return const Center(child: Text('No attendance records found.'));
           }
 
           return ListView.builder(

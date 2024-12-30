@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 class TestScreen extends StatefulWidget {
+  const TestScreen({super.key});
+
   @override
   _TestScreenState createState() => _TestScreenState();
 }
@@ -22,7 +24,8 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   Future<void> _loadQuestionsData() async {
-    final String response = await rootBundle.loadString('assets/data/questions_data.json');
+    final String response =
+        await rootBundle.loadString('assets/data/questions_data.json');
     final data = await json.decode(response);
 
     setState(() {
@@ -120,7 +123,8 @@ class _TestScreenState extends State<TestScreen> {
                 color: currentQuestionIndex > 0 ? Colors.blue : Colors.grey,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text('Previous', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('Previous', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ),
@@ -135,9 +139,13 @@ class _TestScreenState extends State<TestScreen> {
               ),
             ),
             GestureDetector(
-              onTap: currentQuestionIndex < allQuestions.length - 1 ? _nextQuestion : null,
+              onTap: currentQuestionIndex < allQuestions.length - 1
+                  ? _nextQuestion
+                  : null,
               child: Card(
-                color: currentQuestionIndex < allQuestions.length - 1 ? Colors.blue : Colors.grey,
+                color: currentQuestionIndex < allQuestions.length - 1
+                    ? Colors.blue
+                    : Colors.grey,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text('Next', style: TextStyle(color: Colors.white)),

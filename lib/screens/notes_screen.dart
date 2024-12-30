@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class NotesPage extends StatefulWidget {
   final int id;
 
-  NotesPage({required this.id});
+  const NotesPage({super.key, required this.id});
 
   @override
   _NotesPageState createState() => _NotesPageState();
